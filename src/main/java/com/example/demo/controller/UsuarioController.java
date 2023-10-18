@@ -34,8 +34,8 @@ public class UsuarioController {
         usuarioService.salvar(usuario);
     }
 
-    public void atualizar(
-            @RequestBody Usuario usuario){
+    @PutMapping
+    public void atualizar(@RequestBody Usuario usuario){
         usuarioService.salvar(usuario);
     }
 }

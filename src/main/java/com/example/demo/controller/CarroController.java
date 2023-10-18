@@ -34,8 +34,8 @@ public class CarroController {
         carroService.salvar(carro);
     }
 
-    public void atualizar(
-            @RequestBody Carro carro){
+    @PutMapping
+    public void atualizar(@RequestBody Carro carro){
         carroService.salvar(carro);
     }
 }
