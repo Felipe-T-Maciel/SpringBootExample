@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.ResultSet;
@@ -8,22 +9,18 @@ import java.sql.SQLException;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "usuario")
 
 public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "nome", unique = true, nullable = false)
     private String nome;
     private String senha;
     private Integer idade;
+    @ManyToOne
     private Carro carro;
-
-    public Usuario(ResultSet rs) throws SQLException {
-        this.id = rs.getInt("id");
-        this.nome = rs.getString("nome");
-        this.senha = rs.getString("senha");
-        this.idade = rs.getInt("idade");
-        if(rs.getInt("id_carro")!=0){
-            this.carro = new Carro(rs.getInt("id_carro"));
-        }
-    }
 
 }

@@ -1,17 +1,18 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Carro;
-import com.example.demo.repository.CarroDAO;
 import com.example.demo.service.CarroService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
 @RestController
 @RequestMapping("/carro")
-
+@AllArgsConstructor
 public class CarroController {
-    private final CarroService carroService = new CarroService();
+
+    private CarroService carroService;
 
     @GetMapping("/{id}")
     public Carro buscarCarro(@PathVariable Integer id){
@@ -30,14 +31,12 @@ public class CarroController {
 
     @PostMapping()
     public void inserir(@RequestBody Carro carro){
-        carroService.inserir(carro);
+        carroService.salvar(carro);
     }
 
-    @PutMapping("/{id}")
     public void atualizar(
-            @PathVariable Integer id,
             @RequestBody Carro carro){
-        carroService.atualizar(id, carro);
+        carroService.salvar(carro);
     }
 }
 

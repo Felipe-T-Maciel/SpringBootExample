@@ -1,38 +1,30 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Carro;
-import com.example.demo.repository.CarroDAO;
+import com.example.demo.repository.CarroRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 @Service
 public class CarroService {
-    CarroDAO carroDAO;
+    CarroRepository carroRepository;
 
-    public CarroService(){
-        this.carroDAO = new CarroDAO();
-    }
 
     public Carro buscarCarro(Integer id){
-        return carroDAO.buscarUm(id);
+        return carroRepository.findById(id).get();
     }
 
     public Collection<Carro> buscarTodos(){
-        return carroDAO.buscarTodos();
+        return carroRepository.findAll();
     }
 
     public void deletar(Integer id){
-        carroDAO.deletar(id);
+        carroRepository.deleteById(id);
     }
 
-    public void inserir(Carro carro){
-        carroDAO.inserir(carro);
+    public void salvar(Carro carro){
+        carroRepository.save(carro);
     }
 
-    public void atualizar(
-            Integer id,
-            Carro carro){
-        carroDAO.atualizar(carro,id);
-    }
 }

@@ -1,22 +1,18 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Usuario;
-import com.example.demo.repository.Banco;
-import com.example.demo.repository.UsuarioDAO;
 import com.example.demo.service.UsuarioService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
 @RestController
 @RequestMapping("/usuario")
-
+@AllArgsConstructor
 public class UsuarioController {
-    private final UsuarioService usuarioService = new UsuarioService();
 
-//    public UsuarioController(UsuarioService usuarioService){
-//        this.usuarioService = usuarioService
-//    }
+    private UsuarioService usuarioService;
 
     @GetMapping("/{id}")
     public Usuario buscarUsuario(@PathVariable Integer id){
@@ -35,14 +31,12 @@ public class UsuarioController {
 
     @PostMapping()
     public void inserir(@RequestBody Usuario usuario){
-        usuarioService.inserir(usuario);
+        usuarioService.salvar(usuario);
     }
 
-    @PutMapping("/{id}")
-    public void inserir(
-            @PathVariable Integer id,
+    public void atualizar(
             @RequestBody Usuario usuario){
-        usuarioService.atualizar(usuario,id);
+        usuarioService.salvar(usuario);
     }
 }
 

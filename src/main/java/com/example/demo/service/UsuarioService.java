@@ -1,65 +1,29 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Usuario;
-import com.example.demo.repository.CarroDAO;
-import com.example.demo.repository.UsuarioDAO;
+import com.example.demo.repository.UsuarioRepostitory;
 
 import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class UsuarioService {
 
-    public UsuarioDAO usuarioDAO;
-    public CarroService carroService;
+    public UsuarioRepostitory usuarioRepostitory;
 
-    public UsuarioService(){
-
-        this.carroService = new CarroService();
-        this.usuarioDAO = new UsuarioDAO();
-
-    }
-
-    public void inserir(Usuario usuario){
-        try {
-            usuarioDAO.inserir(usuario);
-
-        }catch (NoSuchElementException e){
-            carroService.inserir(usuario.getCarro());
-
-        }
-
-    }
-
-    public void atualizar(Usuario usuario, Integer id){
-        try {
-            carroService.buscarCarro(usuario.getCarro().getId());
-
-        }catch (NoSuchElementException e){
-            carroService.inserir(usuario.getCarro());
-        }
-        usuarioDAO.atualizar(usuario, id);
+    public void salvar(Usuario usuario){
+        usuarioRepostitory.save(usuario);
     }
 
     public void deletar(Integer id){
-        usuarioDAO.deletar(id);
+        usuarioRepostitory.deleteById(id);
     }
 
     public Usuario buscarUm(Integer id){
-        Usuario usuario = usuarioDAO.buscarUm(id);
-        try {
-            usuario.setCarro(carroService.buscarCarro(usuario.getCarro().getId()));
-        }catch (Exception ignore){}
-        return usuario;
+        return usuarioRepostitory.findById(id).get();
     }
 
     public Collection<Usuario> buscarTodos(){
-        Collection<Usuario> usuarios = usuarioDAO.buscarTodos();
-        for (Usuario user:
-             usuarios) {
-            try {
-                user.setCarro(carroService.buscarCarro(user.getCarro().getId()));
-            }catch (Exception ignore){}
-        }
-        return usuarios;
+        return usuarioRepostitory.findAll();
     }
 }
