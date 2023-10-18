@@ -21,6 +21,7 @@ public class CarroDAO extends DAOPadrao<Carro, Integer> {
 
     @Override
     public void inserir(Carro car) {
+        conectar();
         String comandoSql = "insert into carro values(?,?,?,?,?);";
         try (PreparedStatement statement = connection.prepareStatement(comandoSql)){
             statement.setInt(1,car.getId());
@@ -29,13 +30,21 @@ public class CarroDAO extends DAOPadrao<Carro, Integer> {
             statement.setInt(4,car.getAno());
             statement.setDouble(5,car.getPreco());
             statement.execute();
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }finally {
+            try {
+                this.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
     @Override
     public void atualizar(Carro car, Integer id) {
+        conectar();
         String comandoSql = "update carro set marca = ?,modelo = ?, ano = ?, preco = ? where id= ?;";
         try (PreparedStatement statement = connection.prepareStatement(comandoSql)){
             statement.setString(1,car.getMarca());
@@ -44,8 +53,15 @@ public class CarroDAO extends DAOPadrao<Carro, Integer> {
             statement.setDouble(4,car.getPreco());
             statement.setDouble(5,id);
             statement.execute();
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }finally {
+            try {
+                this.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
 
     }

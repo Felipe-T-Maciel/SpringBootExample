@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Carro;
 import com.example.demo.repository.CarroDAO;
+import com.example.demo.service.CarroService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -10,33 +11,33 @@ import java.util.Collection;
 @RequestMapping("/carro")
 
 public class CarroController {
-    private final CarroDAO carroDAO = new CarroDAO();
+    private final CarroService carroService = new CarroService();
 
     @GetMapping("/{id}")
     public Carro buscarCarro(@PathVariable Integer id){
-        return carroDAO.buscarUm(id);
+        return carroService.buscarCarro(id);
     }
 
     @GetMapping
     public Collection<Carro> buscarTodos(){
-        return carroDAO.buscarTodos();
+        return carroService.buscarTodos();
     }
 
-    @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Integer id){
-        carroDAO.deletar(id);
+    @DeleteMapping
+    public void deletar(@RequestParam Integer id){
+        carroService.deletar(id);
     }
 
     @PostMapping()
     public void inserir(@RequestBody Carro carro){
-        carroDAO.inserir(carro);
+        carroService.inserir(carro);
     }
 
     @PutMapping("/{id}")
-    public void inserir(
+    public void atualizar(
             @PathVariable Integer id,
             @RequestBody Carro carro){
-        carroDAO.atualizar(carro,id);
+        carroService.atualizar(id, carro);
     }
 }
 

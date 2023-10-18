@@ -16,36 +16,56 @@ public abstract class DAOPadrao<T, ID> implements ICRUD<T,ID> {
     private String tabela;
 
     public DAOPadrao(String tabela){
-        this.connection = Banco.conectar();
         this.tabela = tabela;
+    }
+
+    protected void conectar(){
+        this.connection = Banco.conectar();
     }
 
     @Override
     public Set<T> buscarTodos() {
+        conectar();
         Set<T> listaTodos = new HashSet<>();
         try (PreparedStatement statement = connection.prepareStatement("select * from "+tabela+";")){
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
                 listaTodos.add(converter(rs));
             }
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }finally {
+            try {
+                this.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return listaTodos;
     }
 
 
     public void deletar(Integer integer) {
+        conectar();
         try (PreparedStatement statement = connection.prepareStatement("delete from "+tabela+" where id=?;")){
             statement.setInt(1,integer);
             statement.execute();
+            connection.close();
         }catch (SQLException throwables) {
             throwables.printStackTrace();
+        }finally {
+            try {
+                this.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
 
     public T buscarUm(Integer integer) {
+        conectar();
         try (PreparedStatement statement = connection.prepareStatement("select * from "+tabela+" where id=?")){
             statement.setInt(1,integer);
             ResultSet rs = statement.executeQuery();
@@ -55,6 +75,12 @@ public abstract class DAOPadrao<T, ID> implements ICRUD<T,ID> {
             throw new NoSuchElementException();
         } catch (SQLException throwables) {
             throw new RuntimeException();
+        }finally {
+            try {
+                this.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 

@@ -1,0 +1,11 @@
+ANOTAÇÕES
+
+    controller = Recebe a requisiçõa, Implementa
+    regras relacionadas a requisição HTTP, Aciona a camada Service.
+
+    SERVICE = Chamada pela controller e/ou outras services,
+    Implementa regras de negócio, normalmente envolvendo outras
+    classes; Acionar as camadas Model e Repository.
+
+    Model = Chamada pela Service; Implementa regras de negócio da classe; Devolve p/ Service.
+    Repository = Chamada pela Service; Tradução de comandos SQL para o banco de dados.

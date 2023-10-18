@@ -12,22 +12,25 @@ import java.util.Collection;
 @RequestMapping("/usuario")
 
 public class UsuarioController {
-    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
     private final UsuarioService usuarioService = new UsuarioService();
+
+//    public UsuarioController(UsuarioService usuarioService){
+//        this.usuarioService = usuarioService
+//    }
 
     @GetMapping("/{id}")
     public Usuario buscarUsuario(@PathVariable Integer id){
-        return usuarioDAO.buscarUm(id);
+        return usuarioService.buscarUm(id);
     }
 
     @GetMapping
     public Collection<Usuario> buscarTodos(){
-        return usuarioDAO.buscarTodos();
+        return usuarioService.buscarTodos();
     }
 
-    @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Integer id){
-        usuarioDAO.deletar(id);
+    @DeleteMapping
+    public void deletar(@RequestParam Integer id){
+        usuarioService.deletar(id);
     }
 
     @PostMapping()
@@ -39,7 +42,7 @@ public class UsuarioController {
     public void inserir(
             @PathVariable Integer id,
             @RequestBody Usuario usuario){
-        usuarioDAO.atualizar(usuario,id);
+        usuarioService.atualizar(usuario,id);
     }
 }
 

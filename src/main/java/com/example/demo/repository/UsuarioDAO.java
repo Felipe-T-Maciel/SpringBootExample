@@ -22,6 +22,7 @@ public class UsuarioDAO extends DAOPadrao<Usuario, Integer> {
 
     @Override
     public void inserir(Usuario user) {
+        conectar();
         String comandoSql = "insert into usuario values(?,?,?,?,?);";
         try (PreparedStatement statement = connection.prepareStatement(comandoSql)){
             statement.setInt(1,user.getId());
@@ -32,6 +33,12 @@ public class UsuarioDAO extends DAOPadrao<Usuario, Integer> {
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }finally {
+            try {
+                this.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
 
     }
@@ -39,6 +46,7 @@ public class UsuarioDAO extends DAOPadrao<Usuario, Integer> {
 
     @Override
     public void atualizar(Usuario obj, Integer id) {
+        conectar();
         String comandoSql = "update usuario set nome = ?,senha=?,idade = ?, id_carro = ? where id= ?;";
         try (PreparedStatement statement = connection.prepareStatement(comandoSql)){
             statement.setString(1,obj.getNome());
@@ -53,6 +61,12 @@ public class UsuarioDAO extends DAOPadrao<Usuario, Integer> {
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }finally {
+            try {
+                this.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
 
     }
