@@ -1,22 +1,19 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Usuario;
-import com.example.demo.repository.UsuarioRepostitory;
+import com.example.demo.model.Cliente;
+import com.example.demo.repository.ClienteRepostitory;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class UsuarioService {
+public class ClienteService {
 
-    public UsuarioRepostitory usuarioRepostitory;
+    public ClienteRepostitory usuarioRepostitory;
 
-    public void salvar(Usuario usuario){
+    public void salvar(Cliente usuario){
         usuarioRepostitory.save(usuario);
     }
 
@@ -24,11 +21,11 @@ public class UsuarioService {
         usuarioRepostitory.deleteById(id);
     }
 
-    public Usuario buscarUm(Integer id){
+    public Cliente buscarUm(Integer id){
         return usuarioRepostitory.findById(id).get();
     }
 
-    public Collection<Usuario> buscarTodos(){
+    public Collection<Cliente> buscarTodos(){
         return usuarioRepostitory.findAll();
     }
 }

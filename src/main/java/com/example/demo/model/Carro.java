@@ -7,15 +7,15 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "carro")
-
+@Table(name = "tb_carro")
 public class Carro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String marca;
     private String modelo;
-    private int ano;
-    private double preco;
-
+    private Integer ano;
+    private Double preco;
+    @OneToOne(mappedBy = "veiculo")
+    private Seguro seguro;
 }

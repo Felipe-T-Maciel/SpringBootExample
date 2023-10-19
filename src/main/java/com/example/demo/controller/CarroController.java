@@ -29,7 +29,7 @@ public class CarroController {
         carroService.deletar(id);
     }
 
-    @PostMapping()
+    @PostMapping
     public void inserir(@RequestBody Carro carro){
         carroService.salvar(carro);
     }
